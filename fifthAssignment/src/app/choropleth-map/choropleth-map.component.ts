@@ -15,7 +15,6 @@ export class ChoroplethMapComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscribeForScatterPlotChanges();
 
     Promise.all([d3.csv('./assets/data/owid-covid-data.csv')]).then((data: any) => {
       data[0].forEach(item => {
@@ -31,30 +30,22 @@ export class ChoroplethMapComponent implements OnInit {
 
   }
 
-  // tslint:disable-next-line:typedef
-  private subscribeForScatterPlotChanges() {
-
-  }
-
   initMap(): void {
 
     const projection = d3.geoMercator()
-      .center([33, 58]) // put focus/zoom on Europe countries
+      .center([33, 58])
       .translate([400, 300])
       .scale([600 / 1.5]);
 
-    // Define path generator
-    const path = d3.geoPath()               // path generator that will convert GeoJSON to SVG paths
-      .projection(projection);          // tell path generator to use get mercator projection wit focus on EU
+    const path = d3.geoPath()
+      .projection(projection);
 
-    // Create SVG element and append map to the SVG
     this.svg = d3.select('.map-container')
       .append('svg')
       .attr('class', 'geoMap')
       .attr('width', 800)
       .attr('height', 600);
 
-    // Load in my states data!
     d3.json('./assets/data/eu-states-geo.json').then(json => {
       this.svg.selectAll('path')
         .data(json.features)
@@ -65,11 +56,8 @@ export class ChoroplethMapComponent implements OnInit {
         .style('stroke-width', '1')
         .style('fill', (d) => {
           const totalCasesForCountry = this.getTotalCasesForCountry(d.properties.name);
-          return this.determineColorFor(totalCasesForCountry);
+          return ChoroplethMapComponent.determineColorFor(totalCasesForCountry);
         });
-      // .on('click', singleCountryData => {
-      //   this.onMouseActionClick(singleCountryData);
-      // });
     });
   }
 
@@ -85,23 +73,14 @@ export class ChoroplethMapComponent implements OnInit {
     return totalCases;
   }
 
-  // tslint:disable-next-line:typedef
-  private determineColorFor(infectedPeople: number) {
+  private static determineColorFor(infectedPeople: number) {
     const maxInfected = 2410462;
-    if (infectedPeople <= maxInfected / 8) {
+    if (infectedPeople <= maxInfected / 4) {
       return '#ef9a9a';
-    }else if (infectedPeople >= maxInfected / 8 && infectedPeople <=maxInfected / 7) {
-      return '#e57373';//'#5698b9';
-    } else if (infectedPeople >= maxInfected / 7 && infectedPeople <=maxInfected / 6) {
-      return '#ef5350';//'#5698b9';
-    } else if (infectedPeople >= maxInfected / 6 && infectedPeople <=maxInfected / 5) {
-      return '#f44336';//'#5698b9';
-    } else if (infectedPeople >= maxInfected / 5 && infectedPeople <=maxInfected / 4) {
-      return  '#e53935';//'#be64ac';
-    } else if (infectedPeople > maxInfected / 4 && infectedPeople <=maxInfected / 3) {
-      return '#d32f2f';//'#8c62aa';
-    } else if (infectedPeople > maxInfected / 3 && infectedPeople <=maxInfected / 2){
-      return '#c62828';//'#3b4994';
+    } else if (infectedPeople >= maxInfected / 4 && infectedPeople <=maxInfected / 3) {
+      return '#e57373';
+    } else if (infectedPeople > maxInfected / 3 && infectedPeople <=maxInfected / 2) {
+      return '#f44336';
     } else{
       return '#b71c1c';
     }

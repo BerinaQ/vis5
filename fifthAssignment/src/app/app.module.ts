@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { ChoroplethMapComponent } from './choropleth-map/choropleth-map.component';
-import { ScatterPlotComponent } from './scatter-plot/scatter-plot.component';
+import { LegendComponent } from './legend/legend.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChoroplethMapComponent,
-    ScatterPlotComponent
+    LegendComponent
   ],
   imports: [
     BrowserModule
