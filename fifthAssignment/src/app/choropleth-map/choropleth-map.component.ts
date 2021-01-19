@@ -99,14 +99,22 @@ export class ChoroplethMapComponent implements OnInit {
   // tslint:disable-next-line:typedef
   private determineColorFor(infectedPeople: number) {
     const maxInfected = 2410462;
-    if (infectedPeople <= maxInfected / 4) {
-      return '#5698b9';
-    } else if (infectedPeople >= maxInfected / 4 && infectedPeople <=maxInfected / 3) {
-      return '#be64ac';
-    } else if (infectedPeople > maxInfected / 3 && infectedPeople <=maxInfected / 2) {
-      return '#8c62aa';
+    if (infectedPeople <= maxInfected / 8) {
+      return '#ef9a9a';
+    }else if (infectedPeople >= maxInfected / 8 && infectedPeople <=maxInfected / 7) {
+      return '#e57373';//'#5698b9';
+    } else if (infectedPeople >= maxInfected / 7 && infectedPeople <=maxInfected / 6) {
+      return '#ef5350';//'#5698b9';
+    } else if (infectedPeople >= maxInfected / 6 && infectedPeople <=maxInfected / 5) {
+      return '#f44336';//'#5698b9';
+    } else if (infectedPeople >= maxInfected / 5 && infectedPeople <=maxInfected / 4) {
+      return  '#e53935';//'#be64ac';
+    } else if (infectedPeople > maxInfected / 4 && infectedPeople <=maxInfected / 3) {
+      return '#d32f2f';//'#8c62aa';
+    } else if (infectedPeople > maxInfected / 3 && infectedPeople <=maxInfected / 2){
+      return '#c62828';//'#3b4994';
     } else{
-      return '#3b4994';
+      return '#b71c1c';
     }
   }
 }
