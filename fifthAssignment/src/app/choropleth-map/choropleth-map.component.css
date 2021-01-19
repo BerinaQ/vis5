@@ -50,18 +50,18 @@
   clear: both;
 }
 
-/*::ng-deep .first {*/
-/*  background-color: #5698b9;*/
-/*}*/
+::ng-deep .first {
+  background-color: #5698b9;
+}
 
-/*::ng-deep .second {*/
-/*  background-color: #be64ac;*/
-/*}*/
+::ng-deep .second {
+  background-color: #be64ac;
+}
 
-/*::ng-deep .third {*/
-/*  background-color: #8c62aa;*/
-/*}*/
+::ng-deep .third {
+  background-color: #8c62aa;
+}
 
-/*::ng-deep .fourth {*/
-/*  background-color: #3b4994;*/
-/*}*/
+::ng-deep .fourth {
+  background-color: #3b4994;
+}

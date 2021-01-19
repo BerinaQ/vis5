@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -6,14 +6,17 @@ import * as d3 from 'd3';
   templateUrl: './choropleth-map.component.html',
   styleUrls: ['./choropleth-map.component.css']
 })
+
 export class ChoroplethMapComponent implements OnInit {
   private svg;
-  public title = 'Density of tests performed with respect to the population';
-  constructor() { }
 
-  ngOnInit(): void {  
+  constructor() {
+  }
+
+  ngOnInit(): void {
     this.subscribeForScatterPlotChanges();
     this.initMap();
+    // this.determineColorFor();
   }
 
   private subscribeForScatterPlotChanges() {
@@ -21,6 +24,7 @@ export class ChoroplethMapComponent implements OnInit {
   }
 
   initMap(): void {
+
     const projection = d3.geoMercator()
       .center([33, 58]) // put focus/zoom on Europe countries
       /*.center([23, 5]) // put focus/zoom on Europe countries*/ // africa
@@ -48,6 +52,21 @@ export class ChoroplethMapComponent implements OnInit {
 
     // Load in my states data!
     d3.json('./assets/data/eu-states-geo.json').then(json => {
+
+      function determineColorFor(infectedPeople: number) {
+
+        const max_infected = 2410462
+        if (infectedPeople <= max_infected / 4) {
+          return '#5698b9';
+        } else if (max_infected / 3) {
+          return '#be64ac';
+        } else if (max_infected / 2) {
+          return '#8c62aa';
+        } else {
+          return '#3b4994';
+        }
+      }
+
       this.svg.selectAll('path')
         .data(json.features)
         .enter()
@@ -56,11 +75,12 @@ export class ChoroplethMapComponent implements OnInit {
         .style('stroke', '#fff')
         .style('stroke-width', '1')
         .style('fill', function (d) {
-          return 'rgb(213,222,217)';
+          determineColorFor(d.total_cases);
         })
-        // .on('click', singleCountryData => {
-        //   this.onMouseActionClick(singleCountryData);
-        // });
+      // .on('click', singleCountryData => {
+      //   this.onMouseActionClick(singleCountryData);
+      // });
     });
   }
+
 }
