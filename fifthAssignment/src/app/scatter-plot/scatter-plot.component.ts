@@ -13,6 +13,7 @@ export class ScatterPlotComponent implements OnInit {
   private margin = 50;
   private width = 650;
   private height = 300;
+  private data = []
 
   constructor() {
   }
@@ -26,6 +27,8 @@ export class ScatterPlotComponent implements OnInit {
         if (item.continent === 'Europe') {
           this.europeSpecificData.push(item);
         }
+        data.new_cases = +data.new_cases
+        data.population = +data.population
       });
       console.log('Data has been loaded');
     }).catch(error => {
@@ -45,7 +48,7 @@ export class ScatterPlotComponent implements OnInit {
   private drawPlot(): void {
     // Add X axis
     const x = d3.scaleLinear()
-      .domain([2009, 2017])
+      .domain([2019, 2021])
       .range([0, this.width]);
     this.svg.append('g')
       .attr('transform', 'translate(0,' + this.height + ')')
@@ -53,7 +56,7 @@ export class ScatterPlotComponent implements OnInit {
 
     // Add Y axis
     const y = d3.scaleLinear()
-      .domain([0, 200000])
+      .domain([0, 2410462])
       .range([this.height, 0]);
 
     this.svg.append('g')
@@ -62,10 +65,10 @@ export class ScatterPlotComponent implements OnInit {
     // Add dots
     const dots = this.svg.append('g');
     dots.selectAll('dot')
-      // .data(this.data)
+      .data(this.data)
       .enter()
       .append('circle')
-      .attr('cx', d => x(d.date))
+      .attr('cx', d => x(d.population))
       .attr('cy', d => y(d.new_cases))
       .attr('r', 7)
       .style('opacity', .5)
@@ -73,12 +76,12 @@ export class ScatterPlotComponent implements OnInit {
 
     // Add labels
     dots.selectAll('text')
-      // .data(this.data)
+      .data(this.data)
       .enter()
       .append('text')
       .text(d => d.Framework)
-      .attr('x', d => x(d.Released))
-      .attr('y', d => y(d.Stars));
+      .attr('x', d => x(d.population))
+      .attr('y', d => y(d.new_cases));
 
   }
 }

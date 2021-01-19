@@ -29,8 +29,6 @@ export class ChoroplethMapComponent implements OnInit {
       console.log('Something wrong while trying to read data');
     });
 
-
-    // this.determineColorFor();
   }
 
   // tslint:disable-next-line:typedef
@@ -56,14 +54,6 @@ export class ChoroplethMapComponent implements OnInit {
       .attr('width', 800)
       .attr('height', 600);
 
-    // listen for click events outside the map and deselect previously selected county
-    // const svgEl = document.querySelector('.geoMap');
-    // svgEl.addEventListener('click', (e: any) => {
-    //   if (e.toElement.localName === 'svg') {
-    //     this.updateMapSelectedCountry('null');
-    //   }
-    // })
-
     // Load in my states data!
     d3.json('./assets/data/eu-states-geo.json').then(json => {
       this.svg.selectAll('path')
@@ -83,7 +73,6 @@ export class ChoroplethMapComponent implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:typedef
   private getTotalCasesForCountry(countryName: string) {
     let totalCases = 0;
 
